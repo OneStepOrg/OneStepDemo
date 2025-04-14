@@ -6,7 +6,7 @@ const SneakPeek = () => {
       <div className="container mx-auto px-6">
         {/* Section Title */}
         <h2 className="text-4xl font-bold font-inter text-gray-900 text-center mb-8">
-          What You'll Learn
+          What You&apos;ll Learn
         </h2>
         {/* Programs */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

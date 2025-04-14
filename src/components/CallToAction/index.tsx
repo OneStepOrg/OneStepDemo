@@ -10,7 +10,7 @@ const CallToAction = () => {
         </h2>
         {/* Subtext */}
         <p className="text-lg font-inter text-gray-100 max-w-2xl mx-auto mb-8">
-          We're launching soon. Join our waitlist and take the first step with us.
+          We&apos;re launching soon. Join our waitlist and take the first step with us.
         </p>
         {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

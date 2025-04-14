@@ -7,7 +7,7 @@ const WhyOneStep = () => {
       <div className="container mx-auto px-6">
         {/* Section Title */}
         <h2 className="text-4xl font-bold font-inter text-gray-900 text-center mb-8">
-          Why We're Building OneStep
+          Why We&apos;re Building OneStep
         </h2>
         {/* Features */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
