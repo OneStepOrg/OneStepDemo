@@ -1,0 +1,13 @@
+h1{
+    font-weight: 600;
+}
+p{
+    font-weight: 300;
+}
+footer{
+    background-color: #3c4146;
+}
+#footer h1,
+#footer p{
+    color: white;
+}
