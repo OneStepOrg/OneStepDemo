@@ -16,7 +16,7 @@ const CallToAction = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#waitlist"
-            className="bg-white text-primary font-inter font-medium py-3 px-6 rounded-lg hover:bg-gray-100 transition"
+            className="bg-white text-primary font-inter font-medium py-3 px-6 rounded-lg hover:bg-gray-100 hover:bg-transparent hover:border hover:border-white hover:text-white transition"
           >
             Join the Waitlist
           </a>

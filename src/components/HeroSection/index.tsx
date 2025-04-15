@@ -21,7 +21,7 @@ const HeroSection = () => {
         <div className="flex flex-col sm:flex-row gap-4">
           <a
             href="#waitlist"
-            className="bg-primary text-white font-inter font-medium py-3 px-6 rounded-lg hover:bg-white hover:text-black transition"
+            className="bg-primary text-white font-inter font-medium py-3 px-6 rounded-lg hover:bg-transparent hover:text-black hover:border hover:border-primary transition"
           >
             Join the Waitlist
           </a>

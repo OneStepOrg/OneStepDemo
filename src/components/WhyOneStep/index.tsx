@@ -43,7 +43,7 @@ const WhyOneStep = () => {
         <div className="text-center mt-12">
           <a
             href="#waitlist"
-            className="bg-primary text-white font-inter font-medium py-3 px-6 rounded-lg hover:bg-white hover:text-black transition"
+            className="bg-primary text-white font-inter font-medium py-3 px-6 rounded-lg hover:bg-transparent hover:text-black hover:border hover:border-primary transition"
           >
             Join Early & Help Shape the Platform
           </a>
