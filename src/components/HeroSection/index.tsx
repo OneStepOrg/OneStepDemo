@@ -35,7 +35,7 @@ const HeroSection = () => {
         {/* Visual Placeholder */}
         <div className="mt-12">
           <div className="w-full  py-10 rounded-lg flex items-center justify-center">
-            <Image src="/step_undraw.svg" alt="onestep-illustration" width={400} height={400}/>
+            <Image src="/step_onestep.svg" alt="onestep-illustration" width={400} height={400}/>
           </div>
         </div>
       </div>

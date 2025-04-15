@@ -110,7 +110,9 @@ const Header=()=>{
                     <SheetTitle className="px-4">Browse</SheetTitle>
                     <CollapsibleDemo/>
                     {!isLoggedIn?
-                    <Button variant="outline" className="px-5 border-none shadow-none outline-none bg-black text-white hover:bg-gray-300 mx-3" onClick={handleLogin}>Login/Register</Button>:null
+                    <Button variant="outline" className="px-5 border-none shadow-none outline-none bg-black text-white hover:bg-gray-300 mx-3" onClick={handleLogin}>
+                        <Link href="/login">Login/Register</Link>
+                    </Button>:null
                     }
                     </SheetHeader>
                 </SheetContent>
