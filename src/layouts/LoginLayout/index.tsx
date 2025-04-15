@@ -31,40 +31,60 @@ export default function LoginLayout() {
   };
 
   return (
-    <>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
       {tryToLogin ? (
-        <section className="flex flex-wrap">
-            <div>
-                <Image src="/login_onestep.svg" alt="Login OneStep" width={400} height={400}/>
-            </div>
-            <div>
-                <LoginForm
-                    handleSubmit={handleSubmit}
-                    onChangeEmail={onChangeEmail}
-                    onChangePassword={onChangePassword}
-                    email={email}
-                    password={password}
-                />
-            </div>
-            <p>New to OneStep? <span><button onClick={handleFormPageChange}>Click Here</button></span></p>
+        <section className="flex flex-col items-center space-y-4">
+          <Image
+            src="/login_onestep.svg"
+            alt="Login OneStep"
+            width={400}
+            height={400}
+          />
+          <LoginForm
+            handleSubmit={handleSubmit}
+            onChangeEmail={onChangeEmail}
+            onChangePassword={onChangePassword}
+            email={email}
+            password={password}
+          />
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            New to OneStep?{" "}
+            <button
+              onClick={handleFormPageChange}
+              className="text-blue-500 hover:underline"
+            >
+              Click Here
+            </button>
+          </p>
         </section>
       ) : (
-        <section>
-            <div>
-                <Image src="/signup_onestep.svg" alt="Signup OneStep" width={400} height={400}/>
-            </div>
-            <SignupForm
-                handleSubmit={handleSubmit}
-                onChangeUsername={onChangeUsername}
-                onChangeEmail={onChangeEmail}
-                onChangePassword={onChangePassword}
-                username={username}
-                email={email}
-                password={password}
-            />
-            <p>Already Have an Account? <span><button onClick={handleFormPageChange}>Click Here</button></span></p>
+        <section className="flex flex-col items-center space-y-4">
+          <Image
+            src="/signup_onestep.svg"
+            alt="Signup OneStep"
+            width={400}
+            height={400}
+          />
+          <SignupForm
+            handleSubmit={handleSubmit}
+            onChangeUsername={onChangeUsername}
+            onChangeEmail={onChangeEmail}
+            onChangePassword={onChangePassword}
+            username={username}
+            email={email}
+            password={password}
+          />
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Already have an account?{" "}
+            <button
+              onClick={handleFormPageChange}
+              className="text-blue-500 hover:underline"
+            >
+              Click Here
+            </button>
+          </p>
         </section>
       )}
-    </>
+    </div>
   );
 }
