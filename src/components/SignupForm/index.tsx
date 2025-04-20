@@ -26,8 +26,8 @@ const SignupForm: React.FC<FormProps> = ({
       {/* Left: Illustration */}
       <div className="illustration-container">
         <Image
-          src="/login_onestep.svg"
-          alt="website login"
+          src="/signup_onestep.svg"
+          alt="website signup"
           width={500}
           height={500}
           className="illustration-image"
