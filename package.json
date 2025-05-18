@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "serve-dev":"npm install && npm run dev",
-    "serve-prod":"npm install && npm run build && npm start"
+    "serve-dev": "npm install && npm run dev",
+    "serve-prod": "npm install && npm run build && npm start"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
