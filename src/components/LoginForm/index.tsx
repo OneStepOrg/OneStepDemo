@@ -35,6 +35,7 @@ interface LoginFormProps {
 
 export default function LoginForm({ toggleForm }: LoginFormProps) {
   const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -45,40 +46,44 @@ export default function LoginForm({ toggleForm }: LoginFormProps) {
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    setIsLoading(true);
+    setSubmitStatus(null);
     try {
       // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       setSubmitStatus({ type: "success", message: "Login successful!" });
+      setTimeout(() => form.reset(), 2000);
     } catch (error) {
       setSubmitStatus({ type: "error", message: "Login failed. Please check your credentials." });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <section className="w-full max-w-md">
-      <h1>Login</h1>
+    <section className="w-full max-w-md bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-xl shadow-lg">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="email">Email</FormLabel>
+                <FormLabel className="text-gray-700 font-semibold">Email</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <MdEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                    <MdEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                     <Input
                       id="email"
                       type="email"
-                      className="pl-10"
+                      className="pl-10 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                       placeholder="Enter email"
                       aria-describedby="email-error"
                       {...field}
                     />
                   </div>
                 </FormControl>
-                <FormMessage id="email-error" />
+                <FormMessage id="email-error" className="text-red-500" />
               </FormItem>
             )}
           />
@@ -87,33 +92,43 @@ export default function LoginForm({ toggleForm }: LoginFormProps) {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="password">Password</FormLabel>
+                <FormLabel className="text-gray-700 font-semibold">Password</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                    <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                     <Input
                       id="password"
                       type="password"
-                      className="pl-10"
+                      className="pl-10 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                       placeholder="Enter password"
                       aria-describedby="password-error"
                       {...field}
                     />
                   </div>
                 </FormControl>
-                <FormMessage id="password-error" />
+                <FormMessage id="password-error" className="text-red-500" />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">Login</Button>
+          <Button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2"
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging In..." : "Login"}
+          </Button>
         </form>
       </Form>
       {submitStatus && (
-        <p className={`mt-4 text-center ${submitStatus.type === "success" ? "text-green-600" : "text-red-600"}`}>
+        <div
+          className={`mt-4 p-3 rounded-lg text-center ${
+            submitStatus.type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+          }`}
+        >
           {submitStatus.message}
-        </p>
+        </div>
       )}
-      <p className="mt-4 text-center">
+      <p className="mt-4 text-center text-gray-600">
         New to OneStep?{" "}
         <button
           type="button"
