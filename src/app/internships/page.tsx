@@ -2,13 +2,12 @@
 
 import * as React from "react";
 import { useState, useEffect } from "react";
-import NaukriLayout from "@/layouts/NaukriLayout";
+import InternshipsLayout from "@/layouts/InternshipsLayout";
 import JobSearchBar from "@/components/JobSearchBar";
 import JobCard from "@/components/JobCard";
 import FeaturedCompanies from "@/components/FeaturedCompanies";
 import JobCategories from "@/components/JobCategories";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 interface Job {
@@ -108,7 +107,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <NaukriLayout>
+    <InternshipsLayout>
       <section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold mb-4">Find Your Dream Job</h1>
@@ -154,7 +153,7 @@ const HomePage: React.FC = () => {
 
       <JobCategories />
       <FeaturedCompanies />
-    </NaukriLayout>
+    </InternshipsLayout>
   );
 };
 
