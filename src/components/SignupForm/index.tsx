@@ -67,7 +67,9 @@ export default function SignupForm({ toggleForm }: SignupFormProps) {
         toggleForm();
         form.reset();
       }, 2000);
+      console.log(data)
     } catch (error) {
+      console.log(error)
       setSubmitStatus({ type: "error", message: "Signup failed. Please try again." });
     } finally {
       setIsLoading(false);

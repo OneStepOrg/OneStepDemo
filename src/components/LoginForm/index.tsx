@@ -53,7 +53,9 @@ export default function LoginForm({ toggleForm }: LoginFormProps) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSubmitStatus({ type: "success", message: "Login successful!" });
       setTimeout(() => form.reset(), 2000);
+      console.log(data)
     } catch (error) {
+      console.log(error)
       setSubmitStatus({ type: "error", message: "Login failed. Please check your credentials." });
     } finally {
       setIsLoading(false);

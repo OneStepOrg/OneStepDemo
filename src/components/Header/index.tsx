@@ -1,13 +1,13 @@
 "use client"
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
+// import {
+//     DropdownMenu,
+//     DropdownMenuContent,
+//     DropdownMenuItem,
+//     DropdownMenuLabel,
+//     DropdownMenuSeparator,
+//     DropdownMenuTrigger,
+// } from "../ui/dropdown-menu"
 import {
     Sheet,
     SheetContent,
@@ -16,7 +16,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"  
 import Link from "next/link"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+// import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Button } from "../ui/button"
 import Image from "next/image";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -34,16 +34,6 @@ const Header=()=>{
         const token = Cookies.get("jwtToken");
         setIsLoggedIn(!!token);
     }, []); 
-
-    const handleLogin = () => {
-        Cookies.set("jwtToken", "Hello");
-        setIsLoggedIn(true); 
-    };
-
-    const handleLogout = () => {
-        Cookies.remove("jwtToken");
-        setIsLoggedIn(false); 
-    };
 
     return(
         <header className="top-0 position-fixed">
