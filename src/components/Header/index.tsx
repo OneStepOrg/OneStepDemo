@@ -55,52 +55,12 @@ const Header=()=>{
             </Link>
             {!isMobile?
             <>
-            <NavigationMenuDemo/>
-            {isLoggedIn?
-            <DropdownMenu>
-                <DropdownMenuTrigger className="focus:outline-none">
-                    <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png"/>
-                        <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Billing</DropdownMenuItem>
-                    <DropdownMenuItem>Team</DropdownMenuItem>
-                    <DropdownMenuItem>Subscription</DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Button variant="outline" className="p-0 border-none shadow-none outline-none hover:bg-transparent" onClick={handleLogout}>Logout</Button>
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>:
-            <Button variant="outline" className="p-0 border-none shadow-none outline-none hover:bg-gray-300 bg-black px-4 text-white transition" onClick={handleLogin}>Login/Register</Button>
-            }
+                <NavigationMenuDemo/>
+                <Button variant="outline" className="p-0 border-none shadow-none outline-none hover:bg-gray-300 bg-black px-4 text-white transition" >
+                    <Link href="/login">Login/Register</Link>
+                </Button>
             </>:
             <div className="flex items-center justify-center gap-5">
-            {isLoggedIn?
-            <DropdownMenu>
-                <DropdownMenuTrigger className="focus:outline-none px-3">
-                    <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png"/>
-                        <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Billing</DropdownMenuItem>
-                    <DropdownMenuItem>Team</DropdownMenuItem>
-                    <DropdownMenuItem>Subscription</DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Button variant="outline" className="p-0 border-none shadow-none outline-none hover:bg-transparent" onClick={handleLogout}>Logout</Button>
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>:null
-            }
             <Sheet>
                 <SheetTrigger>
                     <RxHamburgerMenu className="text-2xl"/>
@@ -110,7 +70,7 @@ const Header=()=>{
                     <SheetTitle className="px-4">Browse</SheetTitle>
                     <CollapsibleDemo/>
                     {!isLoggedIn?
-                    <Button variant="outline" className="px-5 border-none shadow-none outline-none bg-black text-white hover:bg-gray-300 mx-3" onClick={handleLogin}>
+                    <Button variant="outline" className="px-5 border-none shadow-none outline-none bg-black text-white hover:bg-gray-300 mx-3">
                         <Link href="/login">Login/Register</Link>
                     </Button>:null
                     }
