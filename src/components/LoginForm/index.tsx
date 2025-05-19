@@ -15,21 +15,27 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
-const FormSchema = z
-  .object({
-    email: z.string().email({
-      message: "Please enter a valid email address.",
-    }),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters." })
-      .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
-      .regex(/[0-9]/, { message: "Password must contain at least one number." })
-      .regex(/[^A-Za-z0-9]/, { message: "Password must contain at least one special character." }),
-  })
+const FormSchema = z.object({
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters." })
+    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
+    .regex(/[0-9]/, { message: "Password must contain at least one number." })
+    .regex(/[^A-Za-z0-9]/, { message: "Password must contain at least one special character." }),
+});
 
-export default function SignupForm() {
+interface LoginFormProps {
+  toggleForm: () => void;
+}
+
+export default function LoginForm({ toggleForm }: LoginFormProps) {
+  const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -38,63 +44,85 @@ export default function SignupForm() {
     },
   });
 
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      // Mock API call
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
+      setSubmitStatus({ type: "success", message: "Login successful!" });
+    } catch (error) {
+      setSubmitStatus({ type: "error", message: "Login failed. Please check your credentials." });
+    }
+  };
 
   return (
-    <section>
-        <Form {...form}>
-        <form className="w-full sm:w-1/2 md:w-2/3 space-y-6">
-            <FormField
+    <section className="w-full max-w-md">
+      <h1>Login</h1>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+          <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
-                <FormItem>
+              <FormItem>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <FormControl>
-                    <div className="relative">
+                  <div className="relative">
                     <MdEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <Input
-                        id="email"
-                        type="email"
-                        className="pl-10"
-                        placeholder="Enter email"
-                        aria-describedby="email-error"
-                        {...field}
+                      id="email"
+                      type="email"
+                      className="pl-10"
+                      placeholder="Enter email"
+                      aria-describedby="email-error"
+                      {...field}
                     />
-                    </div>
+                  </div>
                 </FormControl>
                 <FormMessage id="email-error" />
-                </FormItem>
+              </FormItem>
             )}
-            />
-            <FormField
+          />
+          <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
-                <FormItem>
+              <FormItem>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <FormControl>
-                    <div className="relative">
+                  <div className="relative">
                     <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <Input
-                        id="password"
-                        type="password"
-                        className="pl-10"
-                        placeholder="Enter password"
-                        aria-describedby="password-error"
-                        {...field}
+                      id="password"
+                      type="password"
+                      className="pl-10"
+                      placeholder="Enter password"
+                      aria-describedby="password-error"
+                      {...field}
                     />
-                    </div>
+                  </div>
                 </FormControl>
                 <FormMessage id="password-error" />
-                </FormItem>
+              </FormItem>
             )}
-            />
-            <Button type="submit">Login</Button>
+          />
+          <Button type="submit" className="w-full">Login</Button>
         </form>
-        </Form>
-        <p>
-            New to OneStep? <button>Register Now</button>
+      </Form>
+      {submitStatus && (
+        <p className={`mt-4 text-center ${submitStatus.type === "success" ? "text-green-600" : "text-red-600"}`}>
+          {submitStatus.message}
         </p>
+      )}
+      <p className="mt-4 text-center">
+        New to OneStep?{" "}
+        <button
+          type="button"
+          onClick={toggleForm}
+          className="text-blue-600 hover:underline font-semibold"
+        >
+          Register Now
+        </button>
+      </p>
     </section>
   );
 }

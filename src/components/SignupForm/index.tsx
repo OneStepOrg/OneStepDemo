@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 const FormSchema = z
   .object({
@@ -38,7 +39,13 @@ const FormSchema = z
     path: ["confirmPassword"],
   });
 
-export default function SignupForm() {
+interface SignupFormProps {
+  toggleForm: () => void;
+}
+
+export default function SignupForm({ toggleForm }: SignupFormProps) {
+  const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -49,106 +56,130 @@ export default function SignupForm() {
     },
   });
 
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      // Mock API call
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
+      setSubmitStatus({ type: "success", message: "Signup successful! Redirecting to login..." });
+      setTimeout(() => toggleForm(), 2000); // Auto-switch to login after success
+    } catch (error) {
+      setSubmitStatus({ type: "error", message: "Signup failed. Please try again." });
+    }
+  };
 
   return (
-    <section>
-        <Form {...form}>
-        <form className="w-full space-y-6">
-            <FormField
+    <section className="w-full max-w-md">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+          <FormField
             control={form.control}
             name="username"
             render={({ field }) => (
-                <FormItem>
+              <FormItem>
                 <FormLabel htmlFor="username">Username</FormLabel>
                 <FormControl>
-                    <div className="relative">
+                  <div className="relative">
                     <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <Input
-                        id="username"
-                        className="pl-10"
-                        placeholder="Enter username"
-                        aria-describedby="username-error"
-                        {...field}
+                      id="username"
+                      className="pl-10"
+                      placeholder="Enter username"
+                      aria-describedby="username-error"
+                      {...field}
                     />
-                    </div>
+                  </div>
                 </FormControl>
                 <FormMessage id="username-error" />
-                </FormItem>
+              </FormItem>
             )}
-            />
-            <FormField
+          />
+          <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
-                <FormItem>
+              <FormItem>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <FormControl>
-                    <div className="relative">
+                  <div className="relative">
                     <MdEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <Input
-                        id="email"
-                        type="email"
-                        className="pl-10"
-                        placeholder="Enter email"
-                        aria-describedby="email-error"
-                        {...field}
+                      id="email"
+                      type="email"
+                      className="pl-10"
+                      placeholder="Enter email"
+                      aria-describedby="email-error"
+                      {...field}
                     />
-                    </div>
+                  </div>
                 </FormControl>
                 <FormMessage id="email-error" />
-                </FormItem>
+              </FormItem>
             )}
-            />
-            <FormField
+          />
+          <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
-                <FormItem>
+              <FormItem>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <FormControl>
-                    <div className="relative">
+                  <div className="relative">
                     <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <Input
-                        id="password"
-                        type="password"
-                        className="pl-10"
-                        placeholder="Enter password"
-                        aria-describedby="password-error"
-                        {...field}
+                      id="password"
+                      type="password"
+                      className="pl-10"
+                      placeholder="Enter password"
+                      aria-describedby="password-error"
+                      {...field}
                     />
-                    </div>
+                  </div>
                 </FormControl>
                 <FormMessage id="password-error" />
-                </FormItem>
+              </FormItem>
             )}
-            />
-            <FormField
+          />
+          <FormField
             control={form.control}
             name="confirmPassword"
             render={({ field }) => (
-                <FormItem>
+              <FormItem>
                 <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
                 <FormControl>
-                    <div className="relative">
+                  <div className="relative">
                     <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <Input
-                        id="confirmPassword"
-                        type="password"
-                        className="pl-10"
-                        placeholder="Confirm password"
-                        aria-describedby="confirmPassword-error"
-                        {...field}
+                      id="confirmPassword"
+                      type="password"
+                      className="pl-10"
+                      placeholder="Confirm password"
+                      aria-describedby="confirmPassword-error"
+                      {...field}
                     />
-                    </div>
+                  </div>
                 </FormControl>
                 <FormMessage id="confirmPassword-error" />
-                </FormItem>
+              </FormItem>
             )}
-            />
-            <Button type="submit">Sign Up</Button>
+          />
+          <Button type="submit" className="w-full">Sign Up</Button>
         </form>
-        </Form>
-        <p>Existing User? <button>Login</button></p>
+      </Form>
+      {submitStatus && (
+        <p className={`mt-4 text-center ${submitStatus.type === "success" ? "text-green-600" : "text-red-600"}`}>
+          {submitStatus.message}
+        </p>
+      )}
+      <p className="mt-4 text-center">
+        Existing User?{" "}
+        <button
+          type="button"
+          onClick={toggleForm}
+          className="text-blue-600 hover:underline font-semibold"
+        >
+          Login
+        </button>
+      </p>
     </section>
   );
 }

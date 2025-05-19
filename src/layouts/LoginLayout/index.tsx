@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import LoginForm from "@/components/LoginForm";
 import SignupForm from "@/components/SignupForm";
@@ -7,44 +7,44 @@ import { useState } from "react";
 
 const LoginLayout = () => {
   const [isLogin, setIsLogin] = useState(false);
-  const handleChange = () => {
+
+  const toggleForm = () => {
     setIsLogin((prev) => !prev);
   };
 
   return (
-    <section>
+    <section className="w-screen h-screen flex flex-col md:flex-row bg-gradient-to-br from-blue-50 to-gray-100 overflow-hidden transition-all duration-300">
       {isLogin ? (
-        <section className="flex flex-row flex-wrap items-center gap-10 justify-center">
-          <div className="relative w-80 h-80 sm:w-80 sm:h-80">
-            <Image 
-                src="login_onestep.svg" 
-                alt="login" 
-                layout="responsive" 
-                width={400} 
-                height={400} 
-                objectFit="contain" 
-            />
+        <div className="flex flex-col md:flex-row w-full h-full">
+          <div className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 md:bg-transparent">
+            <LoginForm toggleForm={toggleForm} />
           </div>
-          <LoginForm />
-        </section>
-      ) : (
-        <section className="flex flex-row flex-wrap items-center gap-10 justify-center">
-          <div className="relative w-70 h-70 sm:w-80 sm:h-80"> 
+          <div className="w-full md:w-1/2 h-1/2 md:h-full relative">
             <Image
-              src="signup_onestep.svg"
-              alt="signup"
-              layout="responsive"
-              width={400}
-              height={400}
-              objectFit="contain"
+              src="/login_onestep.svg"
+              alt="Login illustration"
+              fill
+              className="object-contain p-6"
+              priority
             />
           </div>
-          <SignupForm />
-        </section>
+        </div>
+      ) : (
+        <div className="flex flex-col md:flex-row w-full h-full">
+          <div className="w-full md:w-1/2 h-1/2 md:h-full relative">
+            <Image
+              src="/signup_onestep.svg"
+              alt="Signup illustration"
+              fill
+              className="object-contain p-6"
+              priority
+            />
+          </div>
+          <div className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-6 md:bg-transparent">
+            <SignupForm toggleForm={toggleForm} />
+          </div>
+        </div>
       )}
-      <button type="button" onClick={handleChange}>
-        change
-      </button>
     </section>
   );
 };
