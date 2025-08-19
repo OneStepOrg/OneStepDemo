@@ -1,5 +1,6 @@
 "use client"
 
+<<<<<<< HEAD
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -8,6 +9,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+=======
+// import {
+//     DropdownMenu,
+//     DropdownMenuContent,
+//     DropdownMenuItem,
+//     DropdownMenuLabel,
+//     DropdownMenuSeparator,
+//     DropdownMenuTrigger,
+// } from "../ui/dropdown-menu"
+>>>>>>> 8214569c007e741e6c0bfd43e3f726bac84bce0d
 import {
     Sheet,
     SheetContent,
@@ -16,7 +27,11 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"  
 import Link from "next/link"
+<<<<<<< HEAD
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+=======
+// import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+>>>>>>> 8214569c007e741e6c0bfd43e3f726bac84bce0d
 import { Button } from "../ui/button"
 import Image from "next/image";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -35,6 +50,7 @@ const Header=()=>{
         setIsLoggedIn(!!token);
     }, []); 
 
+<<<<<<< HEAD
     const handleLogin = () => {
         Cookies.set("jwtToken", "Hello");
         setIsLoggedIn(true); 
@@ -45,6 +61,8 @@ const Header=()=>{
         setIsLoggedIn(false); 
     };
 
+=======
+>>>>>>> 8214569c007e741e6c0bfd43e3f726bac84bce0d
     return(
         <header className="top-0 position-fixed">
         <nav className="py-3 px-[10%] flex flex-row items-center justify-between">
@@ -55,6 +73,7 @@ const Header=()=>{
             </Link>
             {!isMobile?
             <>
+<<<<<<< HEAD
             <NavigationMenuDemo/>
             {isLoggedIn?
             <DropdownMenu>
@@ -101,6 +120,14 @@ const Header=()=>{
                 </DropdownMenuContent>
             </DropdownMenu>:null
             }
+=======
+                <NavigationMenuDemo/>
+                <Button variant="outline" className="p-0 border-none shadow-none outline-none hover:bg-gray-300 bg-black px-4 text-white transition" >
+                    <Link href="/login">Login/Register</Link>
+                </Button>
+            </>:
+            <div className="flex items-center justify-center gap-5">
+>>>>>>> 8214569c007e741e6c0bfd43e3f726bac84bce0d
             <Sheet>
                 <SheetTrigger>
                     <RxHamburgerMenu className="text-2xl"/>
@@ -110,7 +137,11 @@ const Header=()=>{
                     <SheetTitle className="px-4">Browse</SheetTitle>
                     <CollapsibleDemo/>
                     {!isLoggedIn?
+<<<<<<< HEAD
                     <Button variant="outline" className="px-5 border-none shadow-none outline-none bg-black text-white hover:bg-gray-300 mx-3" onClick={handleLogin}>
+=======
+                    <Button variant="outline" className="px-5 border-none shadow-none outline-none bg-black text-white hover:bg-gray-300 mx-3">
+>>>>>>> 8214569c007e741e6c0bfd43e3f726bac84bce0d
                         <Link href="/login">Login/Register</Link>
                     </Button>:null
                     }
