@@ -1,6 +1,3 @@
-Got it 👍 Here’s a **complete, polished `README.md`** for your **OneStepDemo** Next.js project. It includes sections like description, features, setup, usage, deployment, and contribution guidelines.  
-
-```markdown
 # 🌟 OneStepDemo
 
 OneStepDemo is a modern web application built with [Next.js](https://nextjs.org), optimized for speed, scalability, and developer experience. This project was bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
@@ -66,10 +63,15 @@ Edits in files like `app/page.tsx` will auto-update in real time.
 ```bash
 onestepdemo/
 ├── app/              # App router (pages, layouts, API routes)
+│   ├── globals.css   # Global styles
+│   ├── layout.tsx    # Root layout component
+│   └── page.tsx      # Home page component
 ├── public/           # Static assets
-├── styles/           # Global styles
 ├── package.json      # Dependencies & scripts
-├── README.md         # Documentation
+├── tsconfig.json     # TypeScript configuration
+├── postcss.config.mjs # PostCSS configuration
+├── tailwind.config.ts # Tailwind CSS configuration
+└── README.md         # Documentation
 ```
 
 ---
@@ -107,17 +109,49 @@ To contribute:
 
 ---
 
+## 🧰 Configuration
+
+This project uses the following configuration files:
+
+- **`tsconfig.json`** – TypeScript configuration, strict mode enabled, supports path aliases (`@/*`), and is set up for Next.js 14.
+- **`postcss.config.mjs`** – PostCSS configuration with Tailwind CSS plugin enabled.
+- **`tailwind.config.ts`** – Tailwind CSS configuration with custom theme settings.
+
+### TypeScript
+
+TypeScript is enabled with strict settings for better type safety. Path aliases are configured so you can import modules using `@/` as the root of the project directory.
+
+### PostCSS & Tailwind CSS
+
+Tailwind CSS is integrated via PostCSS. You can customize your styles in the `app/globals.css` file and extend the theme in `tailwind.config.ts`.
+
+---
+
+## 📝 Scripts
+
+Common scripts available in `package.json`:
+
+- `dev` – Start the development server
+- `build` – Build the application for production
+- `start` – Start the production server
+- `lint` – Run ESLint to check for code issues
+
+Use your preferred package manager (`npm`, `yarn`, `pnpm`, or `bun`) to run these scripts, for example:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+---
+
 ## 📜 License
 
 This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
 
 ---
-
-## 👨‍💻 Author
-
-Built with ❤️ by **[Your Name](https://github.com/your-username)**  
-```
-
-👉 I can also add **badges** at the top (like Next.js version, license, deployment link, etc.) to make it look like a professional open-source README.  
-
-Do you want me to add those badges too?
