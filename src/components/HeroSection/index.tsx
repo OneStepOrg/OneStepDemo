@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const HeroSection = () => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+
   return (
-    <section className="bg-gray-200 min-h-screen flex items-center justify-center py-12">
-      <div className="container mx-auto px-6 flex flex-col items-center text-center">
+    <motion.section
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="bg-gray-200 min-h-screen flex items-center justify-center py-12"
+    >
+      <div ref={ref} className="container mx-auto px-6 flex flex-col items-center text-center">
         {/* Headline */}
         <h1 className="text-5xl md:text-6xl font-bold font-inter text-gray-900 mb-4">
           OneStep Toward a Better You
@@ -34,12 +47,12 @@ const HeroSection = () => {
         </div>
         {/* Visual Placeholder */}
         <div className="mt-12">
-          <div className="w-full  py-10 rounded-lg flex items-center justify-center">
+          <motion.div style={{ y }} className="w-full  py-10 rounded-lg flex items-center justify-center">
             <Image src="/step_onestep.svg" alt="onestep-illustration" width={400} height={400}/>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

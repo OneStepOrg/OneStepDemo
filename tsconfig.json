@@ -22,10 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-<<<<<<< HEAD
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "postcss.config.mjs"],
-=======
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
->>>>>>> 8214569c007e741e6c0bfd43e3f726bac84bce0d
   "exclude": ["node_modules"]
 }

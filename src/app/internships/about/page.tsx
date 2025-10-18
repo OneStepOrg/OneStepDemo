@@ -1,39 +1,40 @@
+'use client';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { FaLightbulb, FaHandshake, FaTools, FaMapMarkerAlt, FaUsers, FaRocket } from 'react-icons/fa';
 
 const internshipsFeatures = [
   {
     title: 'Real-World Projects',
     description: 'Work on actual company projects and build a portfolio that stands out.',
-    image: '/job_hunt.svg',
+    icon: <FaLightbulb className="text-4xl text-gray-800 mb-4" />,
   },
   {
     title: 'Company Partnerships',
     description: 'Access internships from a network of trusted partner companies.',
-    image: '/job_offers.svg',
+    icon: <FaHandshake className="text-4xl text-gray-800 mb-4" />,
   },
   {
     title: 'Skill Application',
     description: 'Apply your learning in real scenarios and gain practical experience.',
-    image: '/learning.svg',
+    icon: <FaTools className="text-4xl text-gray-800 mb-4" />,
   },
   {
     title: 'Internship Types',
     description: 'Remote, in-person, paid, unpaid, and by field—find the right fit for you.',
-    image: '/navigator.svg',
+    icon: <FaMapMarkerAlt className="text-4xl text-gray-800 mb-4" />,
   },
   {
     title: 'Mentorship & Support',
     description: 'Get guidance from mentors and peers throughout your internship journey.',
-    image: '/community.svg',
+    icon: <FaUsers className="text-4xl text-gray-800 mb-4" />,
   },
   {
     title: 'Career Growth',
     description: 'Internships designed to help you launch your career with confidence.',
-    image: '/step_onestep.svg',
+    icon: <FaRocket className="text-4xl text-gray-800 mb-4" />,
   },
 ];
 
@@ -43,21 +44,21 @@ const InternshipsAboutPage = () => {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="bg-gray-200 min-h-[60vh] flex items-center justify-center py-12">
+        <section className="bg-gray-100 py-20">
           <div className="container mx-auto px-6 flex flex-col items-center text-center">
-            <h1 className="text-5xl md:text-6xl font-bold font-inter text-gray-900 mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold font-inter text-gray-900 mb-5">
               Internships with OneStep
             </h1>
-            <p className="text-xl md:text-2xl font-inter text-gray-600 mb-6 max-w-2xl">
+            <p className="text-lg md:text-xl font-inter text-gray-700 mb-7 max-w-3xl leading-relaxed">
               Gain real-world experience, build your network, and launch your career—all through internships designed for you.
             </p>
-            <p className="text-lg font-inter text-gray-500 italic mb-8">
+            <p className="text-md font-inter text-gray-600 italic mb-10">
               Take the next step from learning to doing.
             </p>
             <div className="mt-8">
               <Link
                 href="/internships"
-                className="bg-primary text-white font-inter font-medium py-3 px-6 rounded-lg hover:bg-transparent hover:text-black hover:border hover:border-primary transition"
+                className="bg-gray-800 text-white font-inter font-medium py-3.5 px-7 rounded-lg hover:bg-gray-700 transition-colors border border-gray-800"
               >
                 Browse Internships
               </Link>
@@ -65,19 +66,19 @@ const InternshipsAboutPage = () => {
           </div>
         </section>
         {/* Features Grid */}
-        <section className="bg-white py-16">
+        <section className="bg-white py-20">
           <div className="container mx-auto px-6">
-            <h2 className="text-4xl font-bold font-inter text-gray-900 text-center mb-8">
+            <h2 className="text-3xl font-bold font-inter text-gray-900 text-center mb-10">
               Internship Features & Classifications
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {internshipsFeatures.map((feature) => (
-                <div key={feature.title} className="bg-accent p-6 rounded-lg shadow-sm hover:shadow-md transition text-center flex flex-col justify-center gap-4">
-                  <Image src={feature.image} alt={feature.title} width={400} height={400} />
-                  <h3 className="text-xl font-semibold font-inter text-gray-900">
+                <div key={feature.title} className="bg-gray-50 p-7 rounded-lg shadow-sm hover:shadow-md transition text-center flex flex-col items-center justify-center gap-4 border border-gray-200">
+                  {feature.icon}
+                  <h3 className="text-xl font-semibold font-inter text-gray-900 mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 font-inter">
+                  <p className="text-gray-700 font-inter leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
@@ -86,14 +87,14 @@ const InternshipsAboutPage = () => {
           </div>
         </section>
         {/* Call to Action */}
-        <section className="bg-gray-50 py-16">
+        <section className="bg-gray-100 py-20">
           <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold font-inter text-gray-900 mb-6">
+            <h2 className="text-3xl font-bold font-inter text-gray-900 mb-8">
               Ready to take the next step?
             </h2>
             <Link
               href="/internships"
-              className="bg-primary text-white font-inter font-medium py-3 px-6 rounded-lg hover:bg-transparent hover:text-black hover:border hover:border-primary transition"
+              className="bg-gray-800 text-white font-inter font-medium py-3.5 px-7 rounded-lg hover:bg-gray-700 transition-colors border border-gray-800"
             >
               Browse Internships
             </Link>
@@ -105,4 +106,4 @@ const InternshipsAboutPage = () => {
   );
 };
 
-export default InternshipsAboutPage; 
+export default InternshipsAboutPage;

@@ -1,8 +1,15 @@
 import React from 'react';
+import { motion } from "framer-motion";
 
 const CallToAction = () => {
   return (
-    <section className="bg-primary py-16">
+    <motion.section
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8 }}
+      className="bg-primary py-16"
+    >
       <div className="container mx-auto px-6 text-center">
         {/* Title */}
         <h2 className="text-4xl font-bold font-inter text-white mb-4">
@@ -28,7 +35,7 @@ const CallToAction = () => {
           </a>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

@@ -1,31 +1,27 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
 
-const categories = [
-  { name: "Technology", icon: "/icons/tech.png" },
-  { name: "Finance", icon: "/icons/finance.png" },
-  { name: "Marketing", icon: "/icons/marketing.png" },
-  { name: "Design", icon: "/icons/design.png" },
-];
+const JobCategories = () => {
+  const categories = [
+    { name: "Technology", icon: "/icons/tech.svg" },
+    { name: "Marketing", icon: "/icons/marketing.svg" },
+    { name: "Finance", icon: "/icons/finance.svg" },
+    { name: "Design", icon: "/icons/design.svg" },
+    { name: "Sales", icon: "/icons/sales.svg" },
+    { name: "Engineering", icon: "/icons/engineering.svg" },
+  ];
 
-interface JobCategoriesProps {
-  className?: string;
-}
-
-const JobCategories: React.FC<JobCategoriesProps> = ({ className }) => {
   return (
-    <section className={cn("py-8", className)}>
-      <h2 className="text-2xl font-bold mb-4 text-center">Browse by Category</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {categories.map((category) => (
-          <div
-            key={category.name}
-            className="flex items-center justify-center border rounded-lg p-4 bg-white hover:bg-accent transition-colors"
-          >
-            <img src={category.icon} alt={`${category.name} icon`} className="h-8 w-8 mr-2" />
-            <span>{category.name}</span>
-          </div>
-        ))}
+    <section className="py-12">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-8">Job Categories</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+          {categories.map((category) => (
+            <div key={category.name} className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-md">
+              <Image src={category.icon} alt={category.name} width={50} height={50} />
+              <span className="mt-4 font-semibold">{category.name}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

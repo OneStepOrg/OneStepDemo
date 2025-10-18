@@ -1,117 +1,4 @@
-<<<<<<< HEAD
-import Image from "next/image";
-
-interface FormProps {
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  handleFormPageChange: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  onChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeUsername: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  email: string;
-  password: string;
-  username: string;
-}
-
-const SignupForm: React.FC<FormProps> = ({
-  handleSubmit,
-  handleFormPageChange,
-  onChangeEmail,
-  onChangePassword,
-  onChangeUsername,
-  username,
-  email,
-  password,
-}) => {
-  return (
-    <div className="page-container gap-8">
-      {/* Left: Illustration */}
-      <div className="illustration-container">
-        <Image
-          src="/signup_onestep.svg"
-          alt="website signup"
-          width={500}
-          height={500}
-          className="illustration-image"
-        />
-      </div>
-
-      {/* Right: Signup Form */}
-      <div className="form-container">
-        <form onSubmit={handleSubmit} className="form">
-          <div className="logo-container">
-            <Image
-              src="/next.svg"
-              alt="signup website logo"
-              width={100}
-              height={100}
-              className="logo-image"
-            />
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="username" className="form-label">
-              Username*
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Username"
-              value={username}
-              onChange={onChangeUsername}
-              className="form-input"
-            />
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="email" className="form-label">
-              Email*
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="name@example.com"
-              value={email}
-              onChange={onChangeEmail}
-              className="form-input"
-            />
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="password" className="form-label">
-              Password*
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              value={password}
-              onChange={onChangePassword}
-              className="form-input"
-            />
-          </div>
-
-          <button type="submit" className="submit-button">
-            Sign Up
-          </button>
-        </form>
-
-        <p className="footer-text">
-          Already have an account?{" "}
-          <button onClick={handleFormPageChange} className="footer-link">
-            Click here
-          </button>
-        </p>
-      </div>
-    </div>
-  );
-};
-
-export default SignupForm;
-=======
-"use client";
+'use client';
 
 import { MdEmail } from "react-icons/md";
 import { FaLock, FaUser } from "react-icons/fa";
@@ -129,11 +16,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { signup, login } from "@/lib/api";
+import Cookies from "js-cookie";
 
 const FormSchema = z
   .object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
+    full_name: z.string().min(2, {
+      message: "Full Name must be at least 2 characters.",
     }),
     email: z.string().email({
       message: "Please enter a valid email address.",
@@ -162,7 +51,7 @@ export default function SignupForm({ toggleForm }: SignupFormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
+      full_name: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -173,16 +62,16 @@ export default function SignupForm({ toggleForm }: SignupFormProps) {
     setIsLoading(true);
     setSubmitStatus(null);
     try {
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setSubmitStatus({ type: "success", message: "Signup successful! Redirecting to login..." });
+      await signup({ email: data.email, password_hash: data.password, full_name: data.full_name, role: "STUDENT" });
+      const response = await login({ email: data.email, password_hash: data.password });
+      setSubmitStatus({ type: "success", message: "Signup successful! Redirecting to dashboard..." });
+      Cookies.set("jwtToken", response.token);
       setTimeout(() => {
-        toggleForm();
+        window.location.href = "/dashboard";
         form.reset();
       }, 2000);
-      console.log(data)
-    } catch (error) {
-      console.log(error)
+    } catch (e) {
+      console.error(e);
       setSubmitStatus({ type: "error", message: "Signup failed. Please try again." });
     } finally {
       setIsLoading(false);
@@ -195,23 +84,23 @@ export default function SignupForm({ toggleForm }: SignupFormProps) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
-            name="username"
+            name="full_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-700 font-semibold">Username</FormLabel>
+                <FormLabel className="text-gray-700 font-semibold">Full Name</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                     <Input
-                      id="username"
+                      id="full_name"
                       className="pl-10 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                      placeholder="Enter username"
-                      aria-describedby="username-error"
+                      placeholder="Enter your full name"
+                      aria-describedby="full_name-error"
                       {...field}
                     />
                   </div>
                 </FormControl>
-                <FormMessage id="username-error" className="text-red-500" />
+                <FormMessage id="full_name-error" className="text-red-500" />
               </FormItem>
             )}
           />
@@ -315,4 +204,3 @@ export default function SignupForm({ toggleForm }: SignupFormProps) {
     </section>
   );
 }
->>>>>>> 8214569c007e741e6c0bfd43e3f726bac84bce0d
