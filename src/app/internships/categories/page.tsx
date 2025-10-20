@@ -3,12 +3,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { getListFilterOptions, getFilteredItems } from '@/lib/api';
+import { getListFilterOptions, getFilteredItems, FilterParams } from '@/lib/api';
 import { FaTags } from 'react-icons/fa';
-import useEmblaCarousel from 'embla-carousel-react';
+
 
 interface Internship {
   id: string;
+  hashed_id: string;
   internship_title: string;
   company: string;
   internship_location: string;
@@ -16,7 +17,7 @@ interface Internship {
 }
 
 const InternshipCategoriesPage = () => {
-  const [emblaRef] = useEmblaCarousel({ loop: false });
+  
   const [categories, setCategories] = useState<string[]>([]);
   const [internships, setInternships] = useState<Internship[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
@@ -28,7 +29,7 @@ const InternshipCategoriesPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const data = await getListFilterOptions("internships", "category");
+        const data = await getListFilterOptions("internships", "internship_type");
         setCategories(data);
       } catch (err) {
         setErrorCategories("Failed to fetch categories");
@@ -45,9 +46,9 @@ const InternshipCategoriesPage = () => {
       setLoadingInternships(true);
       setErrorInternships(null);
       try {
-        const filters: { category?: string } = {};
+        const filters: FilterParams = {};
         if (selectedCategory) {
-          filters.category = selectedCategory;
+          filters.internship_type = selectedCategory;
         }
         const data = await getFilteredItems("internships", filters);
         setInternships(data);
@@ -101,33 +102,29 @@ const InternshipCategoriesPage = () => {
           {/* Categories Banner */}
           <div className="mb-12 p-4 bg-white shadow-md rounded-lg border border-gray-200">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Filter by Category:</h2>
-            <div className="embla" ref={emblaRef}>
-              <div className="embla__container flex">
-                {categories.map((cat) => (
-                  <div key={cat} className="embla__slide flex-none mx-2">
-                    <button
-                      onClick={() => handleCategoryClick(cat)}
-                      className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap
-                                 ${selectedCategory === cat
-                                   ? "bg-gray-800 text-white shadow-md"
-                                   : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"}
-                                 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50`}
-                    >
-                      {cat}
-                    </button>
-                  </div>
-                ))}
-                {selectedCategory && (
-                  <div className="embla__slide flex-none mx-2">
-                    <button
-                      onClick={() => setSelectedCategory(null)}
-                      className="px-5 py-2 rounded-full text-sm font-medium bg-red-100 text-red-700 hover:bg-red-200 border border-red-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 whitespace-nowrap"
-                    >
-                      Clear Filter
-                    </button>
-                  </div>
-                )}
-              </div>
+            <div className="flex flex-wrap gap-3">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => handleCategoryClick(cat)}
+                  className={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+                             ${selectedCategory === cat
+                               ? "bg-gray-800 text-white shadow-md"
+                               : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"}
+                             focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50`}
+                >
+                  <FaTags className="mr-2" />
+                  {cat}
+                </button>
+              ))}
+              {selectedCategory && (
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className="flex items-center px-4 py-2 rounded-full text-sm font-medium bg-red-100 text-red-700 hover:bg-red-200 border border-red-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                >
+                  Clear Filter
+                </button>
+              )}
             </div>
           </div>
 
@@ -140,12 +137,12 @@ const InternshipCategoriesPage = () => {
           ) : internships.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {internships.map((internship) => (
-                <div key={internship.id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <div key={internship.hashed_id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">{internship.internship_title}</h3>
                   <p className="text-gray-600 mb-1"><strong>Company:</strong> {internship.company}</p>
                   <p className="text-gray-600 mb-1"><strong>Location:</strong> {internship.internship_location}</p>
                   <p className="text-gray-600"><strong>Work Mode:</strong> {internship.work_mode}</p>
-                  <Link href={`/internships/${internship.id}`}
+                  <Link href={`/internships/${internship.hashed_id}`}
                     className="mt-4 inline-block text-gray-700 hover:text-gray-900 font-medium transition-colors">
                     View Details &rarr;
                   </Link>

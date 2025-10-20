@@ -4,10 +4,11 @@ import Footer from "@/components/Footer";
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { getListFilterOptions, getFilteredItems } from '@/lib/api';
+import { getListFilterOptions, getFilteredItems, FilterParams } from '@/lib/api';
 
 interface Job {
   id: string;
+  hashed_id: string;
   job_title: string;
   company: string;
   job_location: string;
@@ -43,9 +44,9 @@ export default function JobsLocationsPage(){
       setLoadingJobs(true);
       setErrorJobs(null);
       try {
-        const filters: { location?: string } = {};
+        const filters: FilterParams = {};
         if (selectedLocation) {
-          filters.location = selectedLocation;
+          filters.jobLocation = selectedLocation;
         }
         const data = await getFilteredItems("jobs", filters);
         setJobs(data);
@@ -104,12 +105,13 @@ export default function JobsLocationsPage(){
                 <button
                   key={loc}
                   onClick={() => handleLocationClick(loc)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200
+                  className={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
                              ${selectedLocation === loc
                                ? "bg-gray-800 text-white shadow-md"
                                : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"}
                              focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50`}
                 >
+                  <FaMapMarkerAlt className="mr-2" />
                   {loc}
                 </button>
               ))}
@@ -133,12 +135,12 @@ export default function JobsLocationsPage(){
           ) : jobs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {jobs.map((job) => (
-                <div key={job.id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <div key={job.hashed_id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">{job.job_title}</h3>
                   <p className="text-gray-600 mb-1"><strong>Company:</strong> {job.company}</p>
                   <p className="text-gray-600 mb-1"><strong>Location:</strong> {job.job_location}</p>
                   <p className="text-gray-600"><strong>Job Time:</strong> {job.job_time}</p>
-                  <Link href={`/jobs/${job.id}`}
+                  <Link href={`/jobs/${job.hashed_id}`}
                     className="mt-4 inline-block text-gray-700 hover:text-gray-900 font-medium transition-colors">
                     View Details &rarr;
                   </Link>

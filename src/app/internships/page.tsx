@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { getInternships } from "@/lib/api";
+import { getInternships, getListFilterOptions, FilterParams } from "@/lib/api";
 
 interface Internship {
   hashed_id: string;
@@ -19,46 +19,37 @@ interface Internship {
 }
 
 const InternshipsPage: React.FC = () => {
-  const [internships, setInternships] = useState<Internship[]>([]);
   const [filteredInternships, setFilteredInternships] = useState<Internship[]>([]);
-  const [categoryFilter, setCategoryFilter] = useState<string>("");
+  const [internshipTypeFilter, setInternshipTypeFilter] = useState<string>("");
+  const [uniqueInternshipTypes, setUniqueInternshipTypes] = useState<string[]>([]);
   const [searchTitle, setSearchTitle] = useState<string>("");
   const [searchLocation, setSearchLocation] = useState<string>("");
 
   useEffect(() => {
-    const fetchInternships = async () => {
-      const data = await getInternships();
-      setInternships(data);
-      setFilteredInternships(data);
+    const fetchInternshipTypes = async () => {
+      const types = await getListFilterOptions('internships', 'internship_type');
+      setUniqueInternshipTypes(types);
     };
-    fetchInternships();
+    fetchInternshipTypes();
   }, []);
 
   useEffect(() => {
-    let filtered = internships;
-
-    if (categoryFilter && categoryFilter !== "all") {
-      filtered = filtered.filter((internship) =>
-        internship.internship_type.toLowerCase().includes(categoryFilter.toLowerCase())
-      );
-    }
-
-    if (searchTitle) {
-      filtered = filtered.filter((internship) =>
-        internship.internship_title.toLowerCase().includes(searchTitle.toLowerCase())
-      );
-    }
-
-    if (searchLocation) {
-      filtered = filtered.filter((internship) =>
-        internship.internship_location.toLowerCase().includes(searchLocation.toLowerCase())
-      );
-    }
-
-    setFilteredInternships(filtered);
-  }, [internships, categoryFilter, searchTitle, searchLocation]);
-
-  const uniqueCategories = Array.from(new Set(internships.map((internship) => internship.internship_type)));
+    const fetchInternships = async () => {
+      const filters: FilterParams = {};
+      if (internshipTypeFilter && internshipTypeFilter !== "all") {
+        filters.internship_type = internshipTypeFilter;
+      }
+      if (searchTitle) {
+        filters.title = searchTitle;
+      }
+      if (searchLocation) {
+        filters.internship_location = searchLocation;
+      }
+      const data = await getInternships(filters);
+      setFilteredInternships(data);
+    };
+    fetchInternships();
+  }, [internshipTypeFilter, searchTitle, searchLocation]);
 
   const handleSearch = (title: string, location: string) => {
     setSearchTitle(title);
@@ -82,15 +73,15 @@ const InternshipsPage: React.FC = () => {
             <Label htmlFor="category-filter" className="block mb-1">
               Type
             </Label>
-            <Select onValueChange={setCategoryFilter} value={categoryFilter}>
+            <Select onValueChange={setInternshipTypeFilter} value={internshipTypeFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="Select a type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Types</SelectItem>
-                {uniqueCategories.map((category, index) => (
-                  <SelectItem key={`${category}-${index}`} value={category}>
-                    {category}
+                {uniqueInternshipTypes.map((type, index) => (
+                  <SelectItem key={`${type}-${index}`} value={type}>
+                    {type}
                   </SelectItem>
                 ))}
               </SelectContent>

@@ -41,7 +41,13 @@ const CoursePage: React.FC = () => {
   }, [id]);
 
   if (!course) {
-    return <div>Loading...</div>;
+    return (
+      <CoursesLayout>
+        <main className="container mx-auto px-4 py-8 flex items-center justify-center">
+          <p className="text-gray-700 text-lg">Loading course...</p>
+        </main>
+      </CoursesLayout>
+    );
   }
 
   return (

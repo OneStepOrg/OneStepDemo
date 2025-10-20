@@ -9,6 +9,7 @@ import { FaStar } from 'react-icons/fa';
 
 interface Course {
   id: string;
+  hashed_id: string;
   course_name: string;
   provided_by: string;
   skill_level: string;
@@ -70,8 +71,8 @@ const TopRatedCoursesPage = () => {
           </h1>
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {topRatedCourses.map((course) => (
-              <li key={course.id}>
-                <Link href={`/courses/${course.id}`}
+              <li key={course.hashed_id}>
+                <Link href={`/courses/${course.hashed_id}`}
                   className="flex flex-col bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out
                              border border-gray-200 hover:border-gray-400 text-lg font-medium text-gray-800 hover:text-gray-900
                              focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">

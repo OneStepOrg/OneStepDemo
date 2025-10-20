@@ -39,7 +39,13 @@ const InternshipPage: React.FC = () => {
   }, [id]);
 
   if (!internship) {
-    return <div>Loading...</div>;
+    return (
+      <InternshipsLayout>
+        <main className="container mx-auto px-4 py-8 flex items-center justify-center">
+          <p className="text-gray-700 text-lg">Loading internship...</p>
+        </main>
+      </InternshipsLayout>
+    );
   }
 
   return (

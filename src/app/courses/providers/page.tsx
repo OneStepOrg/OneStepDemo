@@ -8,6 +8,7 @@ import { FaUniversity } from 'react-icons/fa';
 
 interface Course {
   id: string;
+  hashed_id: string;
   course_name: string;
   provided_by: string;
   skill_level: string;
@@ -103,12 +104,13 @@ const CourseProvidersPage = () => {
                 <button
                   key={provider}
                   onClick={() => handleProviderClick(provider)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200
+                  className={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
                              ${selectedProvider === provider
                                ? "bg-gray-800 text-white shadow-md"
                                : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"}
                              focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50`}
                 >
+                  <FaUniversity className="mr-2" />
                   {provider}
                 </button>
               ))}
@@ -132,11 +134,11 @@ const CourseProvidersPage = () => {
           ) : courses.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {courses.map((course) => (
-                <div key={course.id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <div key={course.hashed_id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">{course.course_name}</h3>
                   <p className="text-gray-600 mb-1"><strong>Provider:</strong> {course.provided_by}</p>
                   <p className="text-gray-600 mb-1"><strong>Skill Level:</strong> {course.skill_level}</p>
-                  <Link href={`/courses/${course.id}`}
+                  <Link href={`/courses/${course.hashed_id}`}
                     className="mt-4 inline-block text-gray-700 hover:text-gray-900 font-medium transition-colors">
                     View Details &rarr;
                   </Link>

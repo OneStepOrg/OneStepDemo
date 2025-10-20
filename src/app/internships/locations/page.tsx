@@ -3,11 +3,12 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { getListFilterOptions, getFilteredItems } from '@/lib/api';
+import { getListFilterOptions, getFilteredItems, FilterParams } from '@/lib/api';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 
 interface Internship {
   id: string;
+  hashed_id: string;
   internship_title: string;
   company: string;
   internship_location: string;
@@ -26,7 +27,7 @@ const InternshipLocationsPage = () => {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const data = await getListFilterOptions("internships", "location");
+        const data = await getListFilterOptions("internships", "internship_location");
         setLocations(data);
       } catch (err) {
         setErrorLocations("Failed to fetch locations");
@@ -43,9 +44,9 @@ const InternshipLocationsPage = () => {
       setLoadingInternships(true);
       setErrorInternships(null);
       try {
-        const filters: { location?: string } = {};
+        const filters: FilterParams = {};
         if (selectedLocation) {
-          filters.location = selectedLocation;
+          filters.internship_location = selectedLocation;
         }
         const data = await getFilteredItems("internships", filters);
         setInternships(data);
@@ -104,12 +105,13 @@ const InternshipLocationsPage = () => {
                 <button
                   key={loc}
                   onClick={() => handleLocationClick(loc)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200
+                  className={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
                              ${selectedLocation === loc
                                ? "bg-gray-800 text-white shadow-md"
                                : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"}
                              focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50`}
                 >
+                  <FaMapMarkerAlt className="mr-2" />
                   {loc}
                 </button>
               ))}
@@ -133,12 +135,12 @@ const InternshipLocationsPage = () => {
           ) : internships.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {internships.map((internship) => (
-                <div key={internship.id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <div key={internship.hashed_id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">{internship.internship_title}</h3>
                   <p className="text-gray-600 mb-1"><strong>Company:</strong> {internship.company}</p>
                   <p className="text-gray-600 mb-1"><strong>Location:</strong> {internship.internship_location}</p>
                   <p className="text-gray-600"><strong>Work Mode:</strong> {internship.work_mode}</p>
-                  <Link href={`/internships/${internship.id}`}
+                  <Link href={`/internships/${internship.hashed_id}`}
                     className="mt-4 inline-block text-gray-700 hover:text-gray-900 font-medium transition-colors">
                     View Details &rarr;
                   </Link>

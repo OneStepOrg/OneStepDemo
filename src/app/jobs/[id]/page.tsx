@@ -42,7 +42,13 @@ const JobPage: React.FC = () => {
   }, [id]);
 
   if (!job) {
-    return <div>Loading...</div>;
+    return (
+      <JobsLayout>
+        <main className="container mx-auto px-4 py-8 flex items-center justify-center">
+          <p className="text-gray-700 text-lg">Loading job...</p>
+        </main>
+      </JobsLayout>
+    );
   }
 
   return (

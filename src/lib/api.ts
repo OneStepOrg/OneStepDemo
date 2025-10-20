@@ -78,12 +78,8 @@ export const getJobById = async (id: string) => {
   return response.json();
 };
 
-export const getInternships = async () => {
-  const response = await fetch(`${API_URL}/internships`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch internships");
-  }
-  return response.json();
+export const getInternships = async (filters: FilterParams = {}) => {
+  return getFilteredItems("internships", filters);
 };
 
 export const getInternshipById = async (id: string) => {
@@ -286,7 +282,7 @@ export const getListFilterOptions = async (resource: string, filter: string) => 
   return response.json();
 };
 
-interface FilterParams {
+export interface FilterParams {
   limit?: number;
   offset?: number;
   category?: string; // For courses
@@ -295,9 +291,10 @@ interface FilterParams {
   mode?: string; // For courses
   company?: string; // For internships and jobs
   title?: string; // For internships and jobs
-  location?: string; // For internships
+  internship_location?: string; // For internships
   workMode?: string; // For internships
   paid_unpaid?: string; // For internships
+  internship_type?: string; // For internships
   jobCategory?: string; // For jobs
   jobLocation?: string; // For jobs
   jobTime?: string; // For jobs
