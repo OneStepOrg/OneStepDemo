@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = "http://192.168.29.74:5000/api";
 
 interface LoginData {
   email: string;
